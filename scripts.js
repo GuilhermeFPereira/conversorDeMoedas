@@ -1,16 +1,22 @@
 const button = document.getElementById ('convert-button')
 const select = document.getElementById ('currency-select')
 
-const dolar = 5.19
-const euro = 5.47
-const bitcoin = 111719.95
 
-const convertValues = () => {
+const convertValues = async () => {
     const inputReais = document.getElementById ('input-real').value
     const realValueText = document.getElementById ('real-value-text')
     const currencyValueText = document.getElementById ('currency-value-text')
 
     // realValueText = inputReais -- era dessa maneira 
+
+    // async e await servem para o javaScript entender que tem que parar para ler o servidor que estou querendo buscar
+    // async ele tem que estar dentro de uma function, coloca o async antes do function ----> async function myFunction(){}
+    // await --- aonde o java tem q esperar , primeiro o async e depois await
+   const data = await fetch("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL").then( response => response.json()) // then tem uma arrow function
+   
+   const dolar = data.USDBRL.high
+   const euro = data.EURBRL.high
+   const bitcoin = data.BTCBRL.high
 
     realValueText.innerHTML = new Intl.NumberFormat("pt-BR", {
         style: "currency",
